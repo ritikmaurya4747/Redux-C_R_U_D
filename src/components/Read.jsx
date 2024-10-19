@@ -3,33 +3,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { showUser } from "../features/userDetailSlice";
 
 function Read() {
-    const dispatch = useDispatch()
-    const allData = useSelector((state) => state.app);
-    useEffect(() => {
-        dispatch(showUser())
-    },[])
+  const dispatch = useDispatch();
+  const { users, loading } = useSelector((state) => state.app);
+  useEffect(() => {
+    dispatch(showUser());
+  }, []);
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <>
-      <h2 className="text-center text-primary p-2">All Data</h2>
-      <div className="card  w-50 mx-auto bg-danger-subtle">
-        <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <h6 className="card-subtitle mb-2 text-body-secondary">
-            Card subtitle
-          </h6>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" className="card-link">
-            Card link
-          </a>
-          <a href="#" className="card-link">
-            Another link
-          </a>
+  <h2 className="text-center text-info fw-bold p-2">All Data</h2>
+  <div className="cards-wrapper d-flex flex-row flex-wrap justify-content-center gap-3">
+    {users &&
+      users.map((ele) => (
+        <div key={ele.id} className="card w-25 bg-primary-subtle">
+          <div className="card-body d-flex flex-column align-items-center justify-content-center">
+            <h5 className="card-title">{ele.name}</h5>
+            <h6 className="card-subtitle mb-2 text-body-secondary">
+              {ele.email}
+            </h6>
+            <p className="card-text">{ele.gender}</p>
+            <div>
+              <a href="#" className="card-link">
+                View
+              </a>
+              <a href="#" className="card-link">
+                Edit
+              </a>
+              <a href="#" className="card-link">
+                Delete
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </>
+      ))}
+  </div>
+</>
   );
 }
 

@@ -69,7 +69,7 @@ function Create() {
             type="radio"
             name="gender"
             id="male"
-            value="male"
+            value="Male"
             onChange={getUserData}
           />
           <label className="form-check-label ms-2" htmlFor="male">
@@ -82,7 +82,7 @@ function Create() {
             type="radio"
             name="gender"
             id="female"
-            value="female"
+            value="Female"
             onChange={getUserData}
           />
           <label className="form-check-label ms-2" htmlFor="female">
