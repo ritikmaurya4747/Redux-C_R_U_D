@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../features/userDetailSlice";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
   const [users, setUsers] = useState({});
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const getUserData = (e) => {
@@ -13,14 +15,16 @@ function Create() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Users", users); // This should now log name and email
+    console.log("Users", users); 
     dispatch(createUser(users));
+    navigate("/read");
   };
 
   return (
     <div>
+    <h2 className="text-center text-primary mt-2">Fill The data</h2>
       <form
-        className="w-50 mx-auto my-5 bg-danger-subtle p-5 rounded-3"
+        className="w-50 mx-auto my-4 bg-danger-subtle p-5 rounded-3"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">
@@ -30,8 +34,8 @@ function Create() {
           <input
             type="text"
             className="form-control"
-            name="name" // Added name attribute
-            id="name" // Added id for better association with label
+            name="name" 
+            id="name" 
             onChange={getUserData}
           />
         </div>
@@ -42,8 +46,8 @@ function Create() {
           <input
             type="email"
             className="form-control"
-            name="email" // Added name attribute
-            id="email" // Added id for better association with label
+            name="email" 
+            id="email" 
             onChange={getUserData}
           />
         </div>
@@ -54,8 +58,8 @@ function Create() {
           <input
             type="text"
             className="form-control"
-            name="age" // Added name attribute
-            id="age" // Added id for better association with label
+            name="age" 
+            id="age"
             onChange={getUserData}
           />
         </div>
