@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showUser } from "../features/userDetailSlice";
 import CustomModel from "./CustomModel";
 
 function Read() {
   const dispatch = useDispatch();
+  const [id, setId] = useState();
+  const [showPopup, setShowPopup] = useState(false);
   const { users, loading } = useSelector((state) => state.app);
   useEffect(() => {
     dispatch(showUser());
@@ -14,7 +16,7 @@ function Read() {
   }
   return (
     <>
-      <CustomModel />
+      {showPopup &&<CustomModel />}
       <h2 className="text-center text-info fw-bold p-2">All Data</h2>
       <div className="cards-wrapper d-flex flex-row flex-wrap justify-content-center gap-3">
         {users &&
@@ -27,9 +29,12 @@ function Read() {
                 </h6>
                 <p className="card-text">{ele.gender}</p>
                 <div>
-                  <a href="#" className="card-link">
+                  <button
+                    className="card-link bg-primary border-0 rounded-1 "
+                    onClick={() => [setId(ele.id),setShowPopup(true)]}
+                  >
                     View
-                  </a>
+                  </button>
                   <a href="#" className="card-link">
                     Edit
                   </a>
