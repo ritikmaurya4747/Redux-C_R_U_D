@@ -16,7 +16,13 @@ function Read() {
   }
   return (
     <>
-      {showPopup &&<CustomModel />}
+      {showPopup && (
+        <CustomModel
+          id={id}
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+        />
+      )}
       <h2 className="text-center text-info fw-bold p-2">All Data</h2>
       <div className="cards-wrapper d-flex flex-row flex-wrap justify-content-center gap-3">
         {users &&
@@ -31,7 +37,7 @@ function Read() {
                 <div>
                   <button
                     className="card-link bg-primary border-0 rounded-1 "
-                    onClick={() => [setId(ele.id),setShowPopup(true)]}
+                    onClick={() => [setId(ele.id), setShowPopup(true)]}
                   >
                     View
                   </button>
