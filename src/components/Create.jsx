@@ -22,7 +22,7 @@ function Create() {
 
   return (
     <div>
-    <h2 className="text-center text-primary mt-2">Fill The data</h2>
+    <h2 className="text-center  mt-2">Fill The data</h2>
       <form
         className="w-50 mx-auto my-4 bg-danger-subtle p-5 rounded-3"
         onSubmit={handleSubmit}
