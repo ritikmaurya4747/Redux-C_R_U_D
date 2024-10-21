@@ -24,7 +24,7 @@ export const createUser = createAsyncThunk(
   }
 );
 
-// Read Action
+// Read Action to show user in the READ.jsx
 export const showUser = createAsyncThunk(
   "showUser",
   async (args, { rejectWithValue }) => {
