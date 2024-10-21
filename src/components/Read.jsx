@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showUser } from "../features/userDetailSlice";
+import { deleteUser, showUser } from "../features/userDetailSlice";
 import CustomModel from "./CustomModel";
+import { Link } from "react-router-dom";
 
 function Read() {
   const dispatch = useDispatch();
@@ -41,12 +42,15 @@ function Read() {
                   >
                     View
                   </button>
-                  <a href="#" className="card-link">
+                  <Link href="#" className="card-link">
                     Edit
-                  </a>
-                  <a href="#" className="card-link">
+                  </Link>
+                  <Link
+                    onClick={() => dispatch(deleteUser(ele.id))}
+                    className="card-link"
+                  >
                     Delete
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -7,8 +7,11 @@ function CustomModel({id,showPopup,setShowPopup}) {
   return (
     <div className="modalBackground">
       <div className="modalContainer">
-        <button>Close</button>
+        <button onClick={()=>setShowPopup(false)}> Close</button>
         <h2>{singleUser[0].name}</h2>
+        <h2>{singleUser[0].email}</h2>
+        <h2>{singleUser[0].age}</h2>
+        <h2>{singleUser[0].gender}</h2>
       </div>
     </div>
   );
