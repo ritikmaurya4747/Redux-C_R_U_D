@@ -42,7 +42,7 @@ function Read() {
                   >
                     View
                   </button>
-                  <Link href="#" className="card-link">
+                  <Link to={`/edit/${ele.id}`} className="card-link">
                     Edit
                   </Link>
                   <Link
