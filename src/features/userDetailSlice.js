@@ -41,12 +41,13 @@ export const showUser = createAsyncThunk(
   }
 );
 
-// delete Action 
+// delete Action
 export const deleteUser = createAsyncThunk(
   "deleteUser",
   async (id, { rejectWithValue }) => {
     const response = await fetch(
-      `https://6713558d6c5f5ced6626146a.mockapi.io/crud/${id}`,{method:"DELETE"}
+      `https://6713558d6c5f5ced6626146a.mockapi.io/crud/${id}`,
+      { method: "DELETE" }
     );
 
     try {
@@ -62,7 +63,7 @@ export const updateUser = createAsyncThunk(
   "updateUser",
   async (data, { rejectWithValue }) => {
     console.log(data);
-    
+
     const response = await fetch(
       `https://6713558d6c5f5ced6626146a.mockapi.io/crud/${data.id}`,
       {
@@ -83,14 +84,19 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-
-// Creating Reducer
+// Creating Reducer to update state  using reducer function and action
 export const userDetail = createSlice({
   name: "userDetail",
   initialState: {
     users: [],
     loading: false,
-    error: null, 
+    error: null,
+    searchData : [],
+  },
+  reducers: {
+    searchUser  : (state,action) => {
+      state.searchData = action.payload
+    }
   },
   extraReducers: {
     // Create  user
@@ -119,28 +125,28 @@ export const userDetail = createSlice({
     },
     // Delete user
     [deleteUser.pending]: (state) => {
-        state.loading = true;
-      },
-      [deleteUser.fulfilled]: (state, action) => {
-        state.loading = false;
-        const {id} = action.payload;
-        if(id){
-            state.users = state.users.filter((ele) => ele.id !== id)
-        }
-      },
-      [deleteUser.rejected]: (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      },
-      // Update user
+      state.loading = true;
+    },
+    [deleteUser.fulfilled]: (state, action) => {
+      state.loading = false;
+      const { id } = action.payload;
+      if (id) {
+        state.users = state.users.filter((ele) => ele.id !== id);
+      }
+    },
+    [deleteUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    // Update user
     [updateUser.pending]: (state) => {
       state.loading = true;
     },
     [updateUser.fulfilled]: (state, action) => {
       state.loading = false;
-      state.users = state.users.map((ele)=>(
-        ele.id === action.payload.id? action.payload : ele
-      ))
+      state.users = state.users.map((ele) =>
+        ele.id === action.payload.id ? action.payload : ele
+      );
     },
     [updateUser.rejected]: (state, action) => {
       state.loading = false;
@@ -150,3 +156,4 @@ export const userDetail = createSlice({
 });
 
 export default userDetail.reducer;
+export const  { searchUser  } = userDetail.actions;

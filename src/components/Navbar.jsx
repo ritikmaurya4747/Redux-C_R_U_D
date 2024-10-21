@@ -1,14 +1,22 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { searchUser } from "../features/userDetailSlice";
 
 function Navbar() {
   const allUsers = useSelector((state) => state.app.users);
+  const dispatch = useDispatch();
+  const [searchData, setSearchData] = useState("");
+  useEffect(() => {
+    dispatch(searchUser(searchData));
+  },[searchData])
+  console.log(searchData);
+  
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-info">
         <div className="container-fluid">
-          <a className="navbar-brand text-white fw-fw-semibold" >R.T.K</a>
+          <a className="navbar-brand text-white fw-fw-semibold">R.T.K</a>
           <button
             className="navbar-toggler"
             type="button"
@@ -20,13 +28,20 @@ function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" >
+          <div className="collapse navbar-collapse">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item ">
-                <Link to="/" className="nav-link active text-white fw-fw-semibold" >Create Post</Link>
+                <Link
+                  to="/"
+                  className="nav-link active text-white fw-fw-semibold"
+                >
+                  Create Post
+                </Link>
               </li>
               <li className="nav-item">
-                <Link to="/read" className="nav-link text-white fw-fw-semibold">All Post ({allUsers.length})</Link>
+                <Link to="/read" className="nav-link text-white fw-fw-semibold">
+                  All Post ({allUsers.length})
+                </Link>
               </li>
               {/* <li className="nav-item dropdown">
                 <a
@@ -55,8 +70,9 @@ function Navbar() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                onChange={(e) => setSearchData(e.target.value)}
               />
-              <button className="btn btn-outline-success" type="submit">Search</button>
+              
             </form>
           </div>
         </div>

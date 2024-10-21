@@ -8,7 +8,7 @@ function Read() {
   const dispatch = useDispatch();
   const [id, setId] = useState();
   const [showPopup, setShowPopup] = useState(false);
-  const { users, loading } = useSelector((state) => state.app);
+  const { users, loading, searchData } = useSelector((state) => state.app);
   useEffect(() => {
     dispatch(showUser());
   }, []);
@@ -27,34 +27,44 @@ function Read() {
       <h2 className="text-center  fw-bold p-2">All Data</h2>
       <div className="cards-wrapper d-flex flex-row flex-wrap justify-content-center gap-3">
         {users &&
-          users.map((ele) => (
-            <div key={ele.id} className="card w-25 bg-primary-subtle">
-              <div className="card-body d-flex flex-column align-items-center justify-content-center">
-                <h5 className="card-title">{ele.name}</h5>
-                <h6 className="card-subtitle mb-2 text-success">
-                  {ele.email}
-                </h6>
-                <p className="card-text">{ele.gender}</p>
-                <div>
-                  <button
-                    className="card-link bg-primary border-0 rounded-1 text-white fw-fw-semibold"
-                    onClick={() => [setId(ele.id), setShowPopup(true)]}
-                  >
-                    View
-                  </button>
-                  <Link to={`/edit/${ele.id}`} className="card-link">
-                    Edit
-                  </Link>
-                  <Link
-                    onClick={() => dispatch(deleteUser(ele.id))}
-                    className="card-link"
-                  >
-                    Delete
-                  </Link>
+          users
+            .filter((ele) => {
+              if (searchData.length === 0) {
+                return ele;
+              } else {
+                return ele.name
+                  .toLowerCase()
+                  .includes(searchData.toLowerCase());
+              }
+            })
+            .map((ele) => (
+              <div key={ele.id} className="card w-25 bg-primary-subtle">
+                <div className="card-body d-flex flex-column align-items-center justify-content-center">
+                  <h5 className="card-title">{ele.name}</h5>
+                  <h6 className="card-subtitle mb-2 text-success">
+                    {ele.email}
+                  </h6>
+                  <p className="card-text">{ele.gender}</p>
+                  <div>
+                    <button
+                      className="card-link bg-primary border-0 rounded-1 text-white fw-fw-semibold"
+                      onClick={() => [setId(ele.id), setShowPopup(true)]}
+                    >
+                      View
+                    </button>
+                    <Link to={`/edit/${ele.id}`} className="card-link">
+                      Edit
+                    </Link>
+                    <Link
+                      onClick={() => dispatch(deleteUser(ele.id))}
+                      className="card-link"
+                    >
+                      Delete
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
       </div>
     </>
   );
